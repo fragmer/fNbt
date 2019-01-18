@@ -104,7 +104,7 @@ namespace fNbt {
             if (size < 0) {
                 throw new ArgumentOutOfRangeException("size", "List size may not be negative.");
             }
-            if (elementType < NbtTagType.Byte || elementType > NbtTagType.IntArray) {
+            if (elementType < NbtTagType.Byte || elementType > NbtTagType.LongArray) {
                 throw new ArgumentOutOfRangeException("elementType");
             }
             EnforceConstraints(null, NbtTagType.List);
@@ -129,7 +129,7 @@ namespace fNbt {
             if (size < 0) {
                 throw new ArgumentOutOfRangeException("size", "List size may not be negative.");
             }
-            if (elementType < NbtTagType.Byte || elementType > NbtTagType.IntArray) {
+            if (elementType < NbtTagType.Byte || elementType > NbtTagType.LongArray) {
                 throw new ArgumentOutOfRangeException("elementType");
             }
             EnforceConstraints(tagName, NbtTagType.List);
@@ -334,7 +334,7 @@ namespace fNbt {
         #endregion
 
 
-        #region ByteArray and IntArray
+        #region ByteArray, IntArray and LongArray
 
         /// <summary> Writes an unnamed byte array tag, copying data from an array. </summary>
         /// <param name="data"> A byte array containing the data to write. </param>
@@ -569,6 +569,77 @@ namespace fNbt {
             CheckArray(data, offset, count);
             EnforceConstraints(tagName, NbtTagType.IntArray);
             writer.Write((byte)NbtTagType.IntArray);
+            writer.Write(tagName);
+            writer.Write(count);
+            for (int i = offset; i < count; i++) {
+                writer.Write(data[i]);
+            }
+        }
+        
+        /// <summary> Writes an unnamed long array tag, copying data from an array. </summary>
+        /// <param name="data"> A long array containing the data to write. </param>
+        /// <exception cref="NbtFormatException"> No more tags can be written -OR-
+        /// a named long array tag was expected -OR- a tag of a different type was expected -OR-
+        /// the size of a parent list has been exceeded. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null </exception>
+        public void WriteLongArray([NotNull] long[] data) {
+            if (data == null) throw new ArgumentNullException("data");
+            WriteLongArray(data, 0, data.Length);
+        }
+
+
+        /// <summary> Writes an unnamed long array tag, copying data from an array. </summary>
+        /// <param name="data"> A long array containing the data to write. </param>
+        /// <param name="offset"> The starting point in <paramref name="data"/> at which to begin writing. Must not be negative. </param>
+        /// <param name="count"> The number of elements to write. Must not be negative. </param>
+        /// <exception cref="NbtFormatException"> No more tags can be written -OR-
+        /// a named long array tag was expected -OR- a tag of a different type was expected -OR-
+        /// the size of a parent list has been exceeded. </exception>
+        /// <exception cref="ArgumentOutOfRangeException"> <paramref name="offset"/> or
+        /// <paramref name="count"/> is negative. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null </exception>
+        /// <exception cref="ArgumentException"> <paramref name="count"/> is greater than
+        /// <paramref name="offset"/> subtracted from the array length. </exception>
+        public void WriteLongArray([NotNull] long[] data, int offset, int count) {
+            CheckArray(data, offset, count);
+            EnforceConstraints(null, NbtTagType.LongArray);
+            writer.Write(count);
+            for (int i = offset; i < count; i++) {
+                writer.Write(data[i]);
+            }
+        }
+
+
+        /// <summary> Writes a named long array tag, copying data from an array. </summary>
+        /// <param name="tagName"> Name to give to this long array tag. May not be null. </param>
+        /// <param name="data"> A long array containing the data to write. </param>
+        /// <exception cref="NbtFormatException"> No more tags can be written -OR-
+        /// an unnamed long array tag was expected -OR- a tag of a different type was expected. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or
+        /// <paramref name="data"/> is null </exception>
+        public void WriteLongArray([NotNull] String tagName, [NotNull] long[] data) {
+            if (data == null) throw new ArgumentNullException("data");
+            WriteLongArray(tagName, data, 0, data.Length);
+        }
+
+
+        /// <summary> Writes a named long array tag, copying data from an array. </summary>
+        /// <param name="tagName"> Name to give to this long array tag. May not be null. </param>
+        /// <param name="data"> A long array containing the data to write. </param>
+        /// <param name="offset"> The starting point in <paramref name="data"/> at which to begin writing. Must not be negative. </param>
+        /// <param name="count"> The number of elements to write. Must not be negative. </param>
+        /// <exception cref="NbtFormatException"> No more tags can be written -OR-
+        /// an unnamed long array tag was expected -OR- a tag of a different type was expected. </exception>
+        /// <exception cref="ArgumentOutOfRangeException"> <paramref name="offset"/> or
+        /// <paramref name="count"/> is negative. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or
+        /// <paramref name="data"/> is null </exception>
+        /// <exception cref="ArgumentException"> <paramref name="count"/> is greater than
+        /// <paramref name="offset"/> subtracted from the array length. </exception>
+        public void WriteLongArray([NotNull] String tagName, [NotNull] long[] data, int offset, int count) {
+            CheckArray(data, offset, count);
+            EnforceConstraints(tagName, NbtTagType.LongArray);
+            writer.Write((byte)NbtTagType.LongArray);
             writer.Write(tagName);
             writer.Write(count);
             for (int i = offset; i < count; i++) {

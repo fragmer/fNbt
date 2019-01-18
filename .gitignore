@@ -8,3 +8,9 @@ packages/
 *.user
 *.suo
 .vs
+.idea/.idea.fNbt/.idea/workspace.xml
+
+fNbt.sln.DotSettings
+*.xml
+*.iml
+*.DotSettings

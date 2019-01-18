@@ -79,6 +79,7 @@
     <Compile Include="Tags\NbtInt.cs" />
     <Compile Include="Tags\NbtList.cs" />
     <Compile Include="Tags\NbtLong.cs" />
+    <Compile Include="Tags\NbtLongArray.cs" />
     <Compile Include="Tags\NbtShort.cs" />
     <Compile Include="Tags\NbtString.cs" />
     <Compile Include="Tags\NbtTag.cs" />

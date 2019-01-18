@@ -26,7 +26,7 @@ namespace fNbt {
                     if (tags.Count > 0) {
                         throw new ArgumentException("Only empty list tags may have TagType of End.");
                     }
-                }else if (value < NbtTagType.Byte || (value > NbtTagType.IntArray && value != NbtTagType.Unknown)) {
+                }else if (value < NbtTagType.Byte || (value > NbtTagType.LongArray && value != NbtTagType.Unknown)) {
                     throw new ArgumentOutOfRangeException("value");
                 }
                 if (tags.Count > 0) {
@@ -276,6 +276,9 @@ namespace fNbt {
                         break;
                     case NbtTagType.IntArray:
                         newTag = new NbtIntArray();
+                        break;
+                    case NbtTagType.LongArray:
+                        newTag = new NbtLongArray();
                         break;
                     default:
                         // should never happen, since ListType is checked beforehand

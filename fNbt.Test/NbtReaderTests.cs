@@ -68,6 +68,9 @@ namespace fNbt.Test {
             Assert.IsTrue(reader.ReadToFollowing()); // intArray
             CollectionAssert.AreEqual(new[] { 20, 21, 22 }, (int[])reader.ReadValue());
             CollectionAssert.AreEqual(new[] { 20, 21, 22 }, (int[])reader.ReadValue());
+            Assert.IsTrue(reader.ReadToFollowing());
+            CollectionAssert.AreEqual(new long[] { 200, 210, 220 }, (long[]) reader.ReadValue());
+            CollectionAssert.AreEqual(new long[] { 200, 210, 220 }, (long[]) reader.ReadValue());
             Assert.IsTrue(reader.ReadToFollowing()); // string
             Assert.AreEqual("123", reader.ReadValue());
             Assert.AreEqual("123", reader.ReadValue());
@@ -479,6 +482,8 @@ namespace fNbt.Test {
             CollectionAssert.AreEqual(new byte[] { 10, 11, 12 }, (byte[])reader.ReadValue());
             Assert.IsTrue(reader.ReadToFollowing()); // intArray
             CollectionAssert.AreEqual(new[] { 20, 21, 22 }, (int[])reader.ReadValue());
+            Assert.IsTrue(reader.ReadToFollowing()); // longArray
+            CollectionAssert.AreEqual(new long[] { 200, 210, 220 }, (long[]) reader.ReadValue());
             Assert.IsTrue(reader.ReadToFollowing()); // string
             Assert.AreEqual("123", reader.ReadValue());
 
@@ -511,6 +516,8 @@ namespace fNbt.Test {
             CollectionAssert.AreEqual(new byte[] { 10, 11, 12 }, reader.ReadValueAs<byte[]>());
             Assert.IsTrue(reader.ReadToFollowing()); // intArray
             CollectionAssert.AreEqual(new[] { 20, 21, 22 }, reader.ReadValueAs<int[]>());
+            Assert.IsTrue(reader.ReadToFollowing()); // longArray
+            CollectionAssert.AreEqual(new long[] { 200, 210, 220 }, reader.ReadValueAs<long[]>());
             Assert.IsTrue(reader.ReadToFollowing()); // string
             Assert.AreEqual("123", reader.ReadValueAs<string>());
         }

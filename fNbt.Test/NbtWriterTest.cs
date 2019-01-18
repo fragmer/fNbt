@@ -23,6 +23,7 @@ namespace fNbt.Test {
                     writer.WriteDouble("double", 6d);
                     writer.WriteByteArray("byteArray", new byte[] { 10, 11, 12 });
                     writer.WriteIntArray("intArray", new[] { 20, 21, 22 });
+                    writer.WriteLongArray("longArray", new long[] { 200, 210, 220 });
                     writer.WriteString("string", "123");
                 }
                 Assert.IsFalse(writer.IsDone);
@@ -468,6 +469,7 @@ namespace fNbt.Test {
                 Assert.Throws<NbtFormatException>(() => writer.WriteTag(new NbtString("value")));
                 Assert.Throws<NbtFormatException>(() => writer.WriteTag(new NbtByteArray(new byte[0])));
                 Assert.Throws<NbtFormatException>(() => writer.WriteTag(new NbtIntArray(new int[0])));
+                Assert.Throws<NbtFormatException>(() => writer.WriteTag(new NbtLongArray(new long[0])));
                 Assert.Throws<NbtFormatException>(() => writer.WriteTag(new NbtList(NbtTagType.Byte)));
                 Assert.Throws<NbtFormatException>(() => writer.WriteTag(new NbtCompound()));
             }

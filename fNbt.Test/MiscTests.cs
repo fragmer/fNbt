@@ -58,6 +58,14 @@ namespace fNbt.Test {
             Assert.AreNotSame(intArrTag.Value, intArrTagClone.Value);
             CollectionAssert.AreEqual(intArrTag.Value, intArrTagClone.Value);
             Assert.Throws<ArgumentNullException>(() => new NbtIntArray((NbtIntArray)null));
+            
+            NbtLongArray longArrTag = new NbtLongArray("longArrTag", new long[] { 1, 2, 3, 4 });
+            NbtLongArray longArrTagClone = (NbtLongArray) longArrTag.Clone();
+            Assert.AreNotSame(longArrTag, longArrTagClone);
+            Assert.AreEqual(longArrTag.Name, longArrTagClone.Name);
+            Assert.AreNotSame(longArrTag.Value, longArrTagClone.Value);
+            CollectionAssert.AreEqual(longArrTag.Value, longArrTagClone.Value);
+            Assert.Throws<ArgumentNullException>(() => new NbtLongArray((NbtLongArray)null));
 
             NbtList listTag = new NbtList("listTag", new NbtTag[] { new NbtByte(1) });
             NbtList listTagClone = (NbtList)listTag.Clone();
@@ -123,6 +131,23 @@ namespace fNbt.Test {
 
 
         [Test]
+        public void LongArrayIndexerTest() {
+            var longArray = new NbtLongArray("Test");
+            CollectionAssert.AreEqual(new long[0], longArray.Value);
+            longArray.Value = new[] {
+                1,
+                Int64.MaxValue,
+                Int64.MinValue
+            };
+            Assert.AreEqual(1, longArray[0]);
+            Assert.AreEqual(Int64.MaxValue, longArray[1]);
+            Assert.AreEqual(Int64.MinValue, longArray[2]);
+            longArray[0] = 4;
+            Assert.AreEqual(4, longArray[0]);
+        }
+
+
+        [Test]
         public void DefaultValueTest() {
             // test default values of all value tags
             Assert.AreEqual(0, new NbtByte("test").Value);
@@ -131,6 +156,7 @@ namespace fNbt.Test {
             Assert.AreEqual(0f, new NbtFloat("test").Value);
             Assert.AreEqual(0, new NbtInt("test").Value);
             CollectionAssert.AreEqual(new int[0], new NbtIntArray("test").Value);
+            CollectionAssert.AreEqual(new long[0], new NbtLongArray("test").Value);
             Assert.AreEqual(0L, new NbtLong("test").Value);
             Assert.AreEqual(0, new NbtShort("test").Value);
             Assert.AreEqual("", new NbtString().Value);
@@ -141,6 +167,7 @@ namespace fNbt.Test {
         public void NullValueTest() {
             Assert.Throws<ArgumentNullException>(() => new NbtByteArray().Value = null);
             Assert.Throws<ArgumentNullException>(() => new NbtIntArray().Value = null);
+            Assert.Throws<ArgumentNullException>(() => new NbtLongArray().Value = null);
             Assert.Throws<ArgumentNullException>(() => new NbtString().Value = null);
         }
 
@@ -175,6 +202,7 @@ namespace fNbt.Test {
         public void BadParamsTest() {
             Assert.Throws<ArgumentNullException>(() => new NbtByteArray((byte[])null));
             Assert.Throws<ArgumentNullException>(() => new NbtIntArray((int[])null));
+            Assert.Throws<ArgumentNullException>(() => new NbtLongArray((long[])null));
             Assert.Throws<ArgumentNullException>(() => new NbtString((string)null));
         }
     }

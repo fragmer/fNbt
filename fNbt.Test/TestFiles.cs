@@ -82,6 +82,17 @@ namespace fNbt.Test {
                     new NbtIntArray(new[] {
                         1000000, -2000000, 3000000
                     })
+                },
+                new NbtList("LongArrayList") {
+                    new NbtLongArray(new long[] {
+                        10, -20, 30
+                    }),
+                    new NbtLongArray(new long[] {
+                        100, -200, 300
+                    }),
+                    new NbtLongArray(new long[] {
+                        100, -200, 300
+                    })
                 }
             };
         }
@@ -306,6 +317,7 @@ namespace fNbt.Test {
                 new NbtDouble("double", 6d),
                 new NbtByteArray("byteArray", new byte[] { 10, 11, 12 }),
                 new NbtIntArray("intArray", new[] { 20, 21, 22 }),
+                new NbtLongArray("longArray", new long[] { 200, 210, 220 }),
                 new NbtString("string", "123")
             };
         }
@@ -316,7 +328,7 @@ namespace fNbt.Test {
 
             NbtCompound root = file.RootTag;
             Assert.AreEqual("root", root.Name);
-            Assert.AreEqual(9, root.Count);
+            Assert.AreEqual(10, root.Count);
 
             Assert.IsInstanceOf<NbtByte>(root["byte"]);
             NbtTag node = root["byte"];
@@ -357,6 +369,11 @@ namespace fNbt.Test {
             node = root["intArray"];
             Assert.AreEqual("intArray", node.Name);
             CollectionAssert.AreEqual(new[] { 20, 21, 22 }, node.IntArrayValue);
+            
+            Assert.IsInstanceOf<NbtLongArray>(root["longArray"]);
+            node = root["longArray"];
+            Assert.AreEqual("longArray", node.Name);
+            CollectionAssert.AreEqual(new long[] { 200, 210, 220 }, node.LongArrayValue);
 
             Assert.IsInstanceOf<NbtString>(root["string"]);
             node = root["string"];

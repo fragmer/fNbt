@@ -38,6 +38,9 @@
         Compound = 0x0a,
 
         /// <summary> TAG_Byte_Array: A length-prefixed array of signed 32-bit integers. </summary>
-        IntArray = 0x0b
+        IntArray = 0x0b,
+        
+        /// <summary> TAG_Long_Array: A length-prefixed array of signed 64-bit integers. </summary>
+        LongArray = 0x0c
     }
 }

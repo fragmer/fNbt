@@ -127,6 +127,25 @@ namespace fNbt.Test {
 
 
         [Test]
+        public void NbtLongArrayTest() {
+            object dummy;
+            long[] longs = { 1111, 2222, 3333, 4444, 5555 };
+            NbtTag test = new NbtLongArray(longs);
+            Assert.Throws<InvalidCastException>(() => dummy = test.ByteArrayValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.ByteValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.DoubleValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.FloatValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.IntArrayValue);
+            CollectionAssert.AreEqual(longs, test.LongArrayValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.IntValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.LongValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.ShortValue);
+            Assert.Throws<InvalidCastException>(() => dummy = test.StringValue);
+            Assert.IsTrue(test.HasValue);
+        }
+
+
+        [Test]
         public void NbtListTest() {
             object dummy;
             NbtTag test = new NbtList("Derp");
